@@ -1,0 +1,250 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("FYP Forum", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Create Group", "New", "Group")</li>
+                    </ul>
+
+                }
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid body-content ">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Codev-Innovations</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/lib")
+    @RenderSection("scripts", required: false)
+
+    <script class="arrow" type="text/x-template" id="notifications-template">
+        
+        <ul class="notifications " style="">
+            <%
+
+            _.each(notifications, function(notification){
+            if(notification.notificationDto.type ==1){%>
+
+            <li>
+                <a href="/Notification/Index/<%=notification.notificationDto.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'">  <span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span> member of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has send you a proposal of Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type ==2){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  supervisor of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has accepted your group proposal of Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type ==3){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  supervisor of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has rejected your group proposal of Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type ==4){%>
+
+            <li>
+                <a href="/Group/ViewAssignWork/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  supervisor of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has assign work to your group Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type ==5){%>
+
+            <li>
+                <a href="/Notification/ReviewWork/<%=notification.notificationDto.group.id  %>" class="js-data-notification.notificationDto-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  member of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has submit you a work which is assign by you Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type ==6){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  supervisor of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has approved your work Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type ==7){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  supervisor of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has reject your work. Do it Again Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type ==8){%>
+
+            <li>
+                <a href="/Notification/RequestForMeetUp/<%=notification.notificationDto.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  member of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has request you for a meet-up. Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 9){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  supervisor of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has Approved your meet-up request. Meeting is held on <strong><%=moment(notification.notificationDto.meetUpDateTime).format("D MMM HH:mm")  %></strong>  . Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 11){%>
+
+            <li>
+                <a href="/Group/ViewAssignWork/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  supervisor of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has send you project proposals. Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 12){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  co-ordinator of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has Schedule your Presentation at <%=moment(notification.notificationDto.group.presentationDate).format("D MMM HH:mm")  %>  . Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 13){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  supervisor of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has call a meet-up. Meeting is held on <strong><%=moment(notification.notificationDto.meetUpDateTime).format("D MMM HH:mm")  %></strong>  . Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 14){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  co-ordinator of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has upload presentation grade. Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 15){%>
+
+            <li>
+                <a href="/Group/otherFiles/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  member of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has send you a file. Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 16){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  co-ordinator of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has send you a form. Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 17){%>
+
+            <li>
+                <a href="/Group/Details/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  member of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has submit you a form. Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            if(notification.notificationDto.type == 18){%>
+
+            <li>
+                <a href="/Group/ViewSubmitForms/<%=notification.notificationDto.group.id  %>" class="js-data-notification-id='<%=notification.notificationDto.id  %>'"><span class="highlight">   <%=notification.notificationDto.sender.firstName  %> </span>  co-ordinator of <span class="highlight">   <%=notification.notificationDto.group.name  %> </span> has collect your form. Fyp <%=moment(notification.notificationDto.dateTime).format("D MMM HH:mm")  %>.</a>
+            </li>
+
+            <% }
+
+            })
+
+            %>
+        </ul>
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+                
+            $.getJSON("/Api/Notifications", function (notifications) {
+
+                if (notifications[0].countOfNewNotification != 0) {
+
+                console.log(notifications[0].countOfNewNotification);
+
+                    $(".js-notifications-count")
+                        .text(notifications[0].countOfNewNotification)
+                        .removeClass("hide")
+                        .addClass("animated bounceInDown");
+
+
+                }
+
+
+
+                $(".notifications").popover({
+
+                    html: true,
+                    title: "Notifications",
+                    content: function () {
+                        var camplied = _.template($("#notifications-template").html());
+
+                        
+
+                        return camplied({ notifications: notifications });
+
+                        return html
+                    },
+                    placement: "bottom",
+                    trigger: "click"
+
+            
+                }).on("shown.bs.popover", function () {
+
+                    $.post("/Api/Notifications/MarkAsRead")
+                        .done(function () {
+
+                            $(".js-notifications-count")
+                                .text("")
+                                .addClass("hide");
+                        });
+                });
+            });
+        });
+
+    </script>
+
+</body>
+</html>

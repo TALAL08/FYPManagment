@@ -1,0 +1,339 @@
+﻿@using Microsoft.AspNet.Identity
+@model FYPManagment.ViewModel.NewGroupViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div style="position:relative;padding-bottom:600px; padding-top:40px">
+
+    <div style="position:absolute; margin-left:1240px; ">
+        <h3>Send Files</h3>
+        <br />
+        <form action="/Group/Index" method="post" enctype="multipart/form-data">
+
+            <label for="file">Submit Proposals:</label>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <input type="file" name="file" id="file" />
+
+                    <br />
+
+
+                    @Html.HiddenFor(g => g.Group.Id)
+
+                </div>
+
+                <div class="col-sm-1">
+                    <input class="btn btn-primary btn-sm" type="submit" value="Send" />
+                </div>
+
+            </div>
+        </form>
+        <br />
+
+        @if (User.Identity.GetUserId() == Model.GroupMembers.Single(m => m.MemberRole == FYPManagment.Models.MemberRole.SuperVisor).MemberId)
+        {
+            <form class="" id="form" action="/Group/AssignWork" method="post" enctype="multipart/form-data">
+
+                <label for="file">Assign Work</label>
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <input type="file" name="file" id="assignWork" />
+                        <br />
+                        @Html.HiddenFor(g => g.Group.Id)
+                    </div>
+
+                    <div class="col-sm-1">
+
+                        <button class="btn btn-primary btn-sm">Send</button>
+
+                    </div>
+
+                </div>
+            </form>
+
+        }
+    </div>
+
+    <div style="position:absolute; width:950px; margin-left:250px;">
+
+        @Html.Partial("_Chat")
+
+    </div>
+
+    <div style="position:absolute; margin-left:1520px; ">
+
+
+        <h3>Alerts</h3>
+
+        @if (Model.GradeUpload)
+        {
+            <br />
+            <br />
+            <div>
+
+                <button id="gradePresentation" data-group-id="@Model.Group.Id" type="button" class="btn btn-info" onclick="location.href='@Url.Action("Grade", "Group", new { Id = Model.Group.Id })'  ">View Grade </button>
+            </div>
+        }
+
+        @if (Model.Document.Count > 0)
+        {
+
+            <br />
+            <button id="check" class="btn btn-info " type="button" onclick="location.href='@Url.Action("OtherFiles  ", "Group", new { Id = Model.Group.Id } )'">
+                Other Files
+            </button>
+        }
+
+        @if (Model.Document.Count > 0)
+        {
+            <br />
+            <br />
+            <button id="check" class="btn btn-info " type="button" onclick="location.href='@Url.Action("ReviewWork", "Notification", new { Id = Model.Group.Id } )'">
+                Check Assign Work
+            </button>
+        }
+
+
+
+        @if (Model.Group.ProposalSend && !Model.Group.ProposalAccepted && !Model.Group.ProposalRejected)
+        {
+            <br />
+            <br />
+            <button class=" btn btn-info " type="button">Proposal Send. Waiting for response</button>
+
+
+        }
+
+        @if (Model.Group.ProposalSend && Model.Group.ProposalAccepted && !Model.Group.ProposalRejected)
+        {
+            <br />
+            <br />
+
+            <button class=" btn btn-success " type="button">Proposal Approved</button>
+            <text></text>
+
+
+
+        }
+
+        @if (Model.Group.ProposalSend && !Model.Group.ProposalAccepted && Model.Group.ProposalRejected)
+        {
+            <br />
+            <br />
+
+            <button class=" btn btn-danger " type="button">Proposal Rejected</button>
+            <text></text>
+
+
+
+        }
+
+
+
+
+        @if (Model.Group.MeetUpRequestSend && !Model.Group.MeetUpRequestApproved && !Model.Group.MeetUpRequestReject)
+        {
+            <br />
+            <button type="button" class="btn btn-info">Request Send</button>
+
+        }
+        @if (Model.Group.MeetUpRequestSend && Model.Group.MeetUpRequestApproved && !Model.Group.MeetUpRequestReject)
+        {
+            <br />
+            <br />
+            <button type="button" class="btn btn-info">Meeting at @Model.Group.MeetUpDateTime </button>
+
+        }
+        @if (Model.Group.MeetUpRequestSend && !Model.Group.MeetUpRequestApproved && Model.Group.MeetUpRequestReject)
+        {
+
+            <br />
+            <button type="button" class="btn btn-info">Meetup Request Reject</button>
+
+        }
+        @if (Model.Group.PresentationDate != null)
+        {
+            <br />
+            <br />
+            <div>
+
+                <button class="btn btn-info" type="button">Presentation at <strong> @Model.Group.PresentationDate </strong></button>
+
+            </div>
+
+        }
+
+
+        <br />
+        <br />
+        <h3>Actions</h3>
+
+        <div>
+            <br />
+            <label for="file">Schedule Meetup:</label>
+
+            <input class="form-control" type="datetime-local" name="file" id="date" />
+            <br />
+
+
+            @Html.HiddenFor(g => g.Group.Id)
+            <input data-group-id="@Model.Group.Id" id="meet-up" class="btn btn-primary" type="button" value="Send" />
+            <br />
+            <br />
+        </div>
+
+        
+        @*<button id="meet-up" data-group-id="@Model.Group.Id" type="button" class="btn btn-default">Call a Meet-up ?</button>*@
+
+    </div>
+
+
+    <div style="position:absolute; margin-left:-50px">
+
+        <h1 style="    margin-top: -1px;">Group Members</h1>
+
+        <ul style="">
+            @foreach (var member in Model.GroupMembers)
+            {
+                <li class="list">
+                    <div>
+                        <div class="member">
+
+
+                            @member.Member.FirstName
+                        </div>
+                        <div class="memberId">
+
+                            @member.MemberRole
+
+                        </div>
+                    </div>
+                </li>
+
+            }
+
+        </ul>
+
+    </div>
+
+
+
+</div>
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $("#meet-up").on('click', function () {
+
+                var vm = {}
+
+                var button = $(this);
+
+                var groupId = button.attr("data-group-id");
+                var dateTime = $("#date").val();
+
+                vm.groupId = groupId;
+                vm.dateTime = dateTime;
+
+
+                $.ajax({
+
+                    url: "/Api/CallForAMeeting",
+                    method: "Post",
+                    data: vm
+
+                })
+                    .done(function () {
+
+
+                        location.reload();
+
+                    })
+                    .fail(function () {
+
+                        bootbox.alert("Something Unexpected happend");
+
+                    });
+
+            });
+
+        });
+
+    </script>
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the chat page and send messages.-->
+    <script>
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            var chat = $.connection.chatHub;
+            // Create a function that the hub can call back to display messages.
+
+            // Get the user name and store it to prepend to messages.
+
+            var Currentname = $('#displayname').attr('data-name');
+
+            chat.client.addNewMessageToPage = function (name, message, date, time) {
+                if (name == Currentname) {
+                    // Add the message to the page.
+                    $('#discussion').append(" <li class='mymsg' > <div class='msgArea'> <span class='msgHeading'></span><div class='msg'> " + htmlEncode(message) + "</div><span class='msgtime'>" + date + "-" + time + "</span></div></p>");
+                    //$('#discussion').append('<p style="color:green; text-align:left; width:500px"><strong>' + name
+                    //    + ' </strong> ' + htmlEncode(message) + '</p>');
+                }
+                else {
+                    // Add the message to the page.
+
+                    $('#discussion').append(" <li class='othermsg' > <div class='msgAreaOther'> <span class='msgHeadingOther'>" + name + "</span><div class='msgOther'> " + htmlEncode(message) + "</div><span class='msgtimeOther'>" + date + "-" + time + "</span></div></li>");
+
+
+                }
+            };
+
+            $('#displayname').val(Currentname);
+            // Set initial focus to message input box.
+            $('#message').focus();
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+
+
+                    var button = $(this);
+
+                    var groupId = button.attr('data-group-id');
+
+                    var senderId = button.attr('data-sender-id');
+                    // Call the Send method on the hub.
+
+
+
+                    chat.server.send($('#displayname').val(), $('#message').val(), groupId, senderId);
+                    // Clear text box and reset focus for next comment.
+                    $('#message').val('').focus();
+                });
+            });
+        });
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+
+}
+
+

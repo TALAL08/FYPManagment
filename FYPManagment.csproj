@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99D9C08F-06DF-45E3-BA0C-5E5502E5708B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FYPManagment</RootNamespace>
+    <AssemblyName>FYPManagment</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>packages\Microsoft.Owin.Security.4.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>packages\Microsoft.Owin.Security.Facebook.4.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>packages\Microsoft.Owin.Security.Google.4.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>packages\Microsoft.Owin.Security.Twitter.4.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>packages\Microsoft.Owin.Security.MicrosoftAccount.4.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\CallForAMeetingController.cs" />
+    <Compile Include="Controllers\Api\CollectFormsController.cs" />
+    <Compile Include="Controllers\Api\DocumentsController.cs" />
+    <Compile Include="Controllers\Api\FormsController.cs" />
+    <Compile Include="Controllers\Api\GradePresentationsController.cs" />
+    <Compile Include="Controllers\Api\MeetingsAndPresentationsController.cs" />
+    <Compile Include="Migrations\202004030142513_AddDateTimeColumnInSubmitFormsTable.cs" />
+    <Compile Include="Migrations\202004030142513_AddDateTimeColumnInSubmitFormsTable.Designer.cs">
+      <DependentUpon>202004030142513_AddDateTimeColumnInSubmitFormsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004030237221_AddIsCollectedColumnInSubmitFormsTable.cs" />
+    <Compile Include="Migrations\202004030237221_AddIsCollectedColumnInSubmitFormsTable.Designer.cs">
+      <DependentUpon>202004030237221_AddIsCollectedColumnInSubmitFormsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004031603529_AddMeetingAndPresentationDateTimesTable.cs" />
+    <Compile Include="Migrations\202004031603529_AddMeetingAndPresentationDateTimesTable.Designer.cs">
+      <DependentUpon>202004031603529_AddMeetingAndPresentationDateTimesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004051516511_AddGroupChatsTable.cs" />
+    <Compile Include="Migrations\202004051516511_AddGroupChatsTable.Designer.cs">
+      <DependentUpon>202004051516511_AddGroupChatsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004151704360_ChangeDateTimeColumnType.cs" />
+    <Compile Include="Migrations\202004151704360_ChangeDateTimeColumnType.Designer.cs">
+      <DependentUpon>202004151704360_ChangeDateTimeColumnType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004151717522_RemoveChangesDateTimeColumnType.cs" />
+    <Compile Include="Migrations\202004151717522_RemoveChangesDateTimeColumnType.Designer.cs">
+      <DependentUpon>202004151717522_RemoveChangesDateTimeColumnType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupChat.cs" />
+    <Compile Include="Models\MeetingAndPresentationDateTime.cs" />
+    <Compile Include="SignalR\ChatHub.cs" />
+    <Compile Include="ViewModel\FormViewModel.cs" />
+    <Compile Include="Migrations\202003312332358_AddOtherFileColumnInWorkProgressTable.cs" />
+    <Compile Include="Migrations\202003312332358_AddOtherFileColumnInWorkProgressTable.Designer.cs">
+      <DependentUpon>202003312332358_AddOtherFileColumnInWorkProgressTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004012346168_AddConcatinateNameColumnInDocumentsTable.cs" />
+    <Compile Include="Migrations\202004012346168_AddConcatinateNameColumnInDocumentsTable.Designer.cs">
+      <DependentUpon>202004012346168_AddConcatinateNameColumnInDocumentsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004020131178_AddFormPostColumnInGroupTable.cs" />
+    <Compile Include="Migrations\202004020131178_AddFormPostColumnInGroupTable.Designer.cs">
+      <DependentUpon>202004020131178_AddFormPostColumnInGroupTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004021328214_RemoveConcatinateNameColumnFromFormsTable.cs" />
+    <Compile Include="Migrations\202004021328214_RemoveConcatinateNameColumnFromFormsTable.Designer.cs">
+      <DependentUpon>202004021328214_RemoveConcatinateNameColumnFromFormsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004021331231_PopulateFormsTable.cs" />
+    <Compile Include="Migrations\202004021331231_PopulateFormsTable.Designer.cs">
+      <DependentUpon>202004021331231_PopulateFormsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004021553319_AddGroupFormsTable.cs" />
+    <Compile Include="Migrations\202004021553319_AddGroupFormsTable.Designer.cs">
+      <DependentUpon>202004021553319_AddGroupFormsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004021706510_AddSubmitFormsTable.cs" />
+    <Compile Include="Migrations\202004021706510_AddSubmitFormsTable.Designer.cs">
+      <DependentUpon>202004021706510_AddSubmitFormsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Form.cs" />
+    <Compile Include="Models\GroupForm.cs" />
+    <Compile Include="Models\SubmitForm.cs" />
+    <Compile Include="ViewModel\GradeViewModel.cs" />
+    <Compile Include="Migrations\202003292345279_UpdateGroupsTable.cs" />
+    <Compile Include="Migrations\202003292345279_UpdateGroupsTable.Designer.cs">
+      <DependentUpon>202003292345279_UpdateGroupsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\GradePresentationViewModel.cs" />
+    <Compile Include="Controllers\Api\GroupsController.cs" />
+    <Compile Include="Controllers\Api\MarkTasksController.cs" />
+    <Compile Include="Controllers\Api\MeetUpApprovalsController.cs" />
+    <Compile Include="Controllers\Api\MeetUpRejectController.cs" />
+    <Compile Include="Controllers\Api\NotificationsController.cs" />
+    <Compile Include="Controllers\Api\ProposalApprovalsController.cs" />
+    <Compile Include="Controllers\Api\RejectProposalsController.cs" />
+    <Compile Include="Controllers\Api\RequestMeetUpsController.cs" />
+    <Compile Include="Controllers\Api\SchedulePresentationsController.cs" />
+    <Compile Include="Controllers\Api\TaskApprovalsController.cs" />
+    <Compile Include="Controllers\Api\TaskRejectsController.cs" />
+    <Compile Include="Controllers\Api\UsersController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Dtos\GroupDto.cs" />
+    <Compile Include="Dtos\GroupMemberDto.cs" />
+    <Compile Include="Dtos\NotificationDto.cs" />
+    <Compile Include="Dtos\UserDto.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251244195_InitialModel.cs" />
+    <Compile Include="Migrations\202003251244195_InitialModel.Designer.cs">
+      <DependentUpon>202003251244195_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251400396_AddNotificationTable.cs" />
+    <Compile Include="Migrations\202003251400396_AddNotificationTable.Designer.cs">
+      <DependentUpon>202003251400396_AddNotificationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251406014_TurnOffCascadeDelete.cs" />
+    <Compile Include="Migrations\202003251406014_TurnOffCascadeDelete.Designer.cs">
+      <DependentUpon>202003251406014_TurnOffCascadeDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251433471_AddIsReadColumnInUserNotificationsTable.cs" />
+    <Compile Include="Migrations\202003251433471_AddIsReadColumnInUserNotificationsTable.Designer.cs">
+      <DependentUpon>202003251433471_AddIsReadColumnInUserNotificationsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251518249_UpdateNotificationTable.cs" />
+    <Compile Include="Migrations\202003251518249_UpdateNotificationTable.Designer.cs">
+      <DependentUpon>202003251518249_UpdateNotificationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251947088_AddNotificationIdInDocumentTable.cs" />
+    <Compile Include="Migrations\202003251947088_AddNotificationIdInDocumentTable.Designer.cs">
+      <DependentUpon>202003251947088_AddNotificationIdInDocumentTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003252125436_UpdateGroupTable.cs" />
+    <Compile Include="Migrations\202003252125436_UpdateGroupTable.Designer.cs">
+      <DependentUpon>202003252125436_UpdateGroupTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261340441_AddWorkProgressTable.cs" />
+    <Compile Include="Migrations\202003261340441_AddWorkProgressTable.Designer.cs">
+      <DependentUpon>202003261340441_AddWorkProgressTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261343327_AddWorkProgressesTable.cs" />
+    <Compile Include="Migrations\202003261343327_AddWorkProgressesTable.Designer.cs">
+      <DependentUpon>202003261343327_AddWorkProgressesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261541278_AddDateTimeColumnInDocumentsTable.cs" />
+    <Compile Include="Migrations\202003261541278_AddDateTimeColumnInDocumentsTable.Designer.cs">
+      <DependentUpon>202003261541278_AddDateTimeColumnInDocumentsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261614355_UpdateWorkProgressTable.cs" />
+    <Compile Include="Migrations\202003261614355_UpdateWorkProgressTable.Designer.cs">
+      <DependentUpon>202003261614355_UpdateWorkProgressTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261903338_AddApproveAndRejectColumnInWorkProgressTable.cs" />
+    <Compile Include="Migrations\202003261903338_AddApproveAndRejectColumnInWorkProgressTable.Designer.cs">
+      <DependentUpon>202003261903338_AddApproveAndRejectColumnInWorkProgressTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003281358426_AddMeetUpPropertiesIngroupsTable.cs" />
+    <Compile Include="Migrations\202003281358426_AddMeetUpPropertiesIngroupsTable.Designer.cs">
+      <DependentUpon>202003281358426_AddMeetUpPropertiesIngroupsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003281525456_AddMeetUpDateTimeInNotificationsTable.cs" />
+    <Compile Include="Migrations\202003281525456_AddMeetUpDateTimeInNotificationsTable.Designer.cs">
+      <DependentUpon>202003281525456_AddMeetUpDateTimeInNotificationsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003282333078_AddPresentationDateTimeInGroupsTable.cs" />
+    <Compile Include="Migrations\202003282333078_AddPresentationDateTimeInGroupsTable.Designer.cs">
+      <DependentUpon>202003282333078_AddPresentationDateTimeInGroupsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupMember.cs" />
+    <Compile Include="Models\UserNotification.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MemberRole.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationType.cs" />
+    <Compile Include="Models\WorkProgress.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\MeetUpViewModel.cs" />
+    <Compile Include="ViewModel\NewDocumentViewModel.cs" />
+    <Compile Include="ViewModel\NewGroupViewModel.cs" />
+    <Compile Include="ViewModel\NotifiacationViewModel.cs" />
+    <Compile Include="ViewModel\ReviewWorkViewModel.cs" />
+    <Compile Include="ViewModel\ReviewWork.cs" />
+    <Compile Include="ViewModel\SchedulePresentationViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CustomStyling.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\Typeahead.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
+    <Content Include="Scripts\underscore-min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Group\New.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Group\SuperVisorView.cshtml" />
+    <Content Include="Views\Group\StudentView.cshtml" />
+    <Content Include="Views\Notification\ReviewWork.cshtml" />
+    <Content Include="Views\Notification\RequestForMeetUp.cshtml" />
+    <Content Include="Views\Group\ViewAssignWork.cshtml" />
+    <Content Include="Views\Group\CoordinatorView.cshtml" />
+    <Content Include="Views\Group\Grade.cshtml" />
+    <Content Include="Views\Group\otherFiles.cshtml" />
+    <Content Include="Views\Group\Forms.cshtml" />
+    <Content Include="Views\Group\ViewSubmitForms.cshtml" />
+    <Content Include="Views\Shared\_Chat.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="AssignTask\" />
+    <Folder Include="forms\" />
+    <Folder Include="otherFiles\" />
+    <Folder Include="proposals\" />
+    <Folder Include="submitForm\" />
+    <Folder Include="SubmitTask\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202003251244195_InitialModel.resx">
+      <DependentUpon>202003251244195_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251400396_AddNotificationTable.resx">
+      <DependentUpon>202003251400396_AddNotificationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251406014_TurnOffCascadeDelete.resx">
+      <DependentUpon>202003251406014_TurnOffCascadeDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251433471_AddIsReadColumnInUserNotificationsTable.resx">
+      <DependentUpon>202003251433471_AddIsReadColumnInUserNotificationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251518249_UpdateNotificationTable.resx">
+      <DependentUpon>202003251518249_UpdateNotificationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251947088_AddNotificationIdInDocumentTable.resx">
+      <DependentUpon>202003251947088_AddNotificationIdInDocumentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003252125436_UpdateGroupTable.resx">
+      <DependentUpon>202003252125436_UpdateGroupTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261340441_AddWorkProgressTable.resx">
+      <DependentUpon>202003261340441_AddWorkProgressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261343327_AddWorkProgressesTable.resx">
+      <DependentUpon>202003261343327_AddWorkProgressesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261541278_AddDateTimeColumnInDocumentsTable.resx">
+      <DependentUpon>202003261541278_AddDateTimeColumnInDocumentsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261614355_UpdateWorkProgressTable.resx">
+      <DependentUpon>202003261614355_UpdateWorkProgressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261903338_AddApproveAndRejectColumnInWorkProgressTable.resx">
+      <DependentUpon>202003261903338_AddApproveAndRejectColumnInWorkProgressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003281358426_AddMeetUpPropertiesIngroupsTable.resx">
+      <DependentUpon>202003281358426_AddMeetUpPropertiesIngroupsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003281525456_AddMeetUpDateTimeInNotificationsTable.resx">
+      <DependentUpon>202003281525456_AddMeetUpDateTimeInNotificationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003282333078_AddPresentationDateTimeInGroupsTable.resx">
+      <DependentUpon>202003282333078_AddPresentationDateTimeInGroupsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003292345279_UpdateGroupsTable.resx">
+      <DependentUpon>202003292345279_UpdateGroupsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003312332358_AddOtherFileColumnInWorkProgressTable.resx">
+      <DependentUpon>202003312332358_AddOtherFileColumnInWorkProgressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004012346168_AddConcatinateNameColumnInDocumentsTable.resx">
+      <DependentUpon>202004012346168_AddConcatinateNameColumnInDocumentsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004020131178_AddFormPostColumnInGroupTable.resx">
+      <DependentUpon>202004020131178_AddFormPostColumnInGroupTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004021328214_RemoveConcatinateNameColumnFromFormsTable.resx">
+      <DependentUpon>202004021328214_RemoveConcatinateNameColumnFromFormsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004021331231_PopulateFormsTable.resx">
+      <DependentUpon>202004021331231_PopulateFormsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004021553319_AddGroupFormsTable.resx">
+      <DependentUpon>202004021553319_AddGroupFormsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004021706510_AddSubmitFormsTable.resx">
+      <DependentUpon>202004021706510_AddSubmitFormsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004030142513_AddDateTimeColumnInSubmitFormsTable.resx">
+      <DependentUpon>202004030142513_AddDateTimeColumnInSubmitFormsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004030237221_AddIsCollectedColumnInSubmitFormsTable.resx">
+      <DependentUpon>202004030237221_AddIsCollectedColumnInSubmitFormsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004031603529_AddMeetingAndPresentationDateTimesTable.resx">
+      <DependentUpon>202004031603529_AddMeetingAndPresentationDateTimesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004051516511_AddGroupChatsTable.resx">
+      <DependentUpon>202004051516511_AddGroupChatsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004151704360_ChangeDateTimeColumnType.resx">
+      <DependentUpon>202004151704360_ChangeDateTimeColumnType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004151717522_RemoveChangesDateTimeColumnType.resx">
+      <DependentUpon>202004151717522_RemoveChangesDateTimeColumnType.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50069</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44300/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

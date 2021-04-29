@@ -1,0 +1,111 @@
+﻿@using FYPManagment.Models;
+@model FYPManagment.ViewModel.GradeViewModel
+@{
+    ViewBag.Title = "Grade";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Grade</h2>
+
+@if (Model.CurrentUser.MemberRole == MemberRole.CoOrdinator)
+{
+
+    <form>
+        @{int i = 0;
+
+            foreach (var student in Model.members)
+            {
+
+                <div class="form-group" style="position:relative">
+
+
+
+                    <input disabled class="form-control" style="position:absolute; background-color:transparent  " value="@student.Member.FirstName" />
+
+                    <input id="@i" data-student-id="@student.Member.Id" class="form-control" style="position:absolute; margin-left:400px " value="@student.PresentationGrade" />
+
+
+                </div>
+
+                i += 1;
+                <br />
+                <br />
+                <br />
+            }
+        }
+    </form>
+
+    <button data-student-length="@Model.students.Count()" data-group-id="@Model.group.Id" id="submit" class="btn btn-primary">Submit</button>
+}
+else
+{
+    foreach (var student in Model.members)
+    {
+       
+            <div class="form-group" style="position:relative">
+
+                <input disabled class="form-control grade" style="position:absolute;  " value="@student.Member.FirstName" />
+
+                <input disabled class="form-control " style="position:absolute; margin-left:400px " value="@student.PresentationGrade" />
+
+            </div>
+
+            <br />
+            <br />
+            <br />
+        
+    }
+
+}
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $("#submit").on('click', function () {
+
+                var vm = {
+
+                    studentIds: [],
+                    grades: []
+                }
+
+                var button = $(this);
+
+                var groupId = button.attr("data-group-id");
+
+                vm.groupId = groupId;
+
+
+                for (var i = 0; i < button.attr("data-student-length"); i++) {
+
+                    var grade = $("#" + i).val();
+                    var studentId = $("#" + i).attr("data-student-id");
+                    vm.studentIds.push(studentId)
+                    vm.grades.push(grade)
+                }
+
+
+
+
+
+                $.ajax({
+
+                    url: "/Api/GradePresentations/",
+                    method: "Post",
+                    data: vm
+
+                })
+                    .done(function () {
+
+                        bootbox.alert("Grade Upload Successfully");
+
+                    });
+            });
+
+        });
+
+    </script>
+
+}

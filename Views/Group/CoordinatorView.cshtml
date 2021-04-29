@@ -1,0 +1,244 @@
+﻿@using System
+@model FYPManagment.ViewModel.NewGroupViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div style="position:relative;padding-bottom:600px; padding-top:40px">
+
+        <div style="position:absolute; margin-left:1500px; ">
+                <h3>Alerts</h3>
+                <div>
+
+                    @if (Model.Group.PresentationDate != null)
+                    {
+
+                        <div>
+
+                            <button class="btn btn-info" type="button">Presentation at <strong> @Model.Group.PresentationDate </strong></button>
+
+                        </div>
+
+                    }
+                    <div>
+                        <button id="PresentationDate" class="btn btn-info hidden ">Presentation at <strong> @Model.Group.PresentationDate </strong></button>
+                    </div>
+                    <br />
+                    @if (Model.SubmitForms.Count > 0)
+                    {
+                        <div>
+                            <button data-group-id="@Model.Group.Id" type="button" class="btn btn-info" onclick="location.href='@Url.Action("Forms", "Group", new { Id = Model.Group.Id })'  "> Collect Forms </button>
+                        </div>
+                        <br />
+
+                    }
+
+                    <br />
+                    <br />
+                    <h3>Actions</h3>
+                    <div>
+                        <label for="file">Schedule Presentation:</label>
+
+                        <input class="form-control" type="datetime-local" name="file" id="date" />
+                        <br />
+
+
+                        @Html.HiddenFor(g => g.Group.Id)
+                        <input data-group-id="@Model.Group.Id" id="presentation" class="btn btn-primary" type="button" value="Send" />
+                        <br />
+                        <br />
+                    </div>
+
+                    <div>
+
+                        <button id="gradePresentation" data-group-id="@Model.Group.Id" type="button" class="btn btn-info" onclick="location.href='@Url.Action("Grade", "Group", new { Id = Model.Group.Id } )'  "> Grade Presentations </button>
+                    </div>
+
+                    <br />
+                    <div class="form-group">
+
+                        @Html.DropDownListFor(m => m.Forms, new SelectList(Model.Forms, "Id", "FormName"), "SelectForm", new { @class = "form-control js-form" })
+
+                    </div>
+                    <div>
+
+                        <button id="postForm" data-group-id="@Model.Group.Id" data-form-id type="button" class="btn btn-default"> Post Form </button>
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+        <div style="position:absolute; width:950px; margin-left:320px;">
+
+            @Html.Partial("_Chat")
+
+        </div>
+
+        <div style="position:absolute; margin-left:-50px">
+
+            <h1 style="    margin-top: -1px;">Group Members</h1>
+
+            <ul style="">
+                @foreach (var member in Model.GroupMembers)
+                {
+                    <li class="list">
+                        <div>
+                            <div class="member">
+
+
+                                @member.Member.FirstName
+                            </div>
+                            <div class="memberId">
+
+                                @member.MemberRole
+
+                            </div>
+                        </div>
+                    </li>
+
+                }
+            </ul>
+        </div>
+
+
+    </div>
+<br />
+<br />
+<br />
+<br />
+
+
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $("#presentation").on('click', function () {
+
+                var vm = {}
+
+                var button = $(this);
+
+                var groupId = button.attr("data-group-id");
+                var dateTime = $("#date").val();
+
+                vm.groupId = groupId;
+                vm.dateTime = dateTime;
+
+
+                console.log(vm.groupId)
+                console.log(vm.dateTime)
+
+                $.ajax({
+
+                    url: "/Api/SchedulePresentations/",
+                    method: "Post",
+                    data: vm
+
+                })
+                    .done(function () {
+
+                        $("#PresentationDate").removeClass("hidden");
+                        window.location.reload();XMLDocument
+                    });
+            });
+
+            $("select.js-form").change(function () {
+
+                var selectedForm = $(this).children("option:selected").val();
+                $("#postForm").attr("data-form-id", selectedForm);
+            });
+
+            $("#postForm").on('click', function () {
+
+                var button = $(this);
+                var formId = parseInt(button.attr("data-form-id"));
+
+                if (isNaN(formId)) {
+                    return bootbox.alert("Select the form")
+                }
+
+                var groupId = button.attr("data-group-id");
+                $.post("/Api/Forms", { groupId: groupId, formId: formId }, function () {
+
+                    bootbox.alert("Form send to the students ");
+                });
+
+            });
+
+        });
+
+    </script>
+
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the chat page and send messages.-->
+    <script>
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            var chat = $.connection.chatHub;
+            // Create a function that the hub can call back to display messages.
+
+            // Get the user name and store it to prepend to messages.
+
+            var Currentname = $('#displayname').attr('data-name');
+
+            chat.client.addNewMessageToPage = function (name, message, date, time) {
+                if (name == Currentname) {
+                    // Add the message to the page.
+                    $('#discussion').append(" <li class='mymsg' > <div class='msgArea'> <span class='msgHeading'></span><div class='msg'> " + htmlEncode(message) + "</div><span class='msgtime'>" + date + "-" + time + "</span></div></p>");
+                    //$('#discussion').append('<p style="color:green; text-align:left; width:500px"><strong>' + name
+                    //    + ' </strong> ' + htmlEncode(message) + '</p>');
+                }
+                else {
+                    // Add the message to the page.
+
+                    $('#discussion').append(" <li class='othermsg' > <div class='msgAreaOther'> <span class='msgHeadingOther'>" + name + "</span><div class='msgOther'> " + htmlEncode(message) + "</div><span class='msgtimeOther'>" + date + "-" + time + "</span></div></li>");
+
+
+                }
+            };
+
+            $('#displayname').val(Currentname);
+            // Set initial focus to message input box.
+            $('#message').focus();
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+
+
+                    var button = $(this);
+
+                    var groupId = button.attr('data-group-id');
+
+                    var senderId = button.attr('data-sender-id');
+                    // Call the Send method on the hub.
+
+
+
+                    chat.server.send($('#displayname').val(), $('#message').val(), groupId, senderId);
+                    // Clear text box and reset focus for next comment.
+                    $('#message').val('').focus();
+                });
+            });
+        });
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}

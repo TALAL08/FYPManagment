@@ -1,0 +1,211 @@
+﻿    @using Microsoft.AspNet.Identity
+@model FYPManagment.ViewModel.NewGroupViewModel
+@{
+    ViewBag.Title = "AssignWork";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Documents</h2>
+<div class="row">
+    <div class="col-lg-6">
+        <h1>Tasks</h1>
+        <br />
+    </div>
+    <div class="col-lg-6">
+        <h1>Submited Work</h1>
+        <br />
+    </div>
+        
+    </div>
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="row">
+                @foreach (var tasks in Model.AssignWorks)
+                {
+                    <div class="col-lg-5    ">
+                        <a href="~/AssignTask/@tasks.Document.ConcatinateName" download="@tasks.Document.Name"><strong>@tasks.Document.Name</strong></a>
+
+                        <text>send on <strong>@tasks.Document.DateTime.ToShortDateString()</strong> at<strong> @tasks.Document.DateTime.ToShortTimeString()</strong></text>
+                    </div>
+
+                   
+                    <div class="col-lg-7" style="  ">
+
+                        @if (tasks.TaskAssign && !tasks.TaskSubmit && !tasks.Approve && Model.SupervisorId != User.Identity.GetUserId())
+                        {
+                            <label for="file">Submit Assign Work</label>
+                            <br />
+
+                            <div class="row">
+
+                                <form class="" id="form" action="/Group/SubmitAssignWork" method="post" enctype="multipart/form-data">
+
+                                    <div class="col-lg-5">
+
+                                        <input type="file" name="file" id="file" />
+
+                                    </div>
+
+
+                                    <div class="col-lg-4" style="  ">
+
+
+                                        @{
+                                            Model.DocumentId = tasks.Document.Id;
+
+                                        }
+
+                                        @Html.HiddenFor(m => m.Group.Id)
+                                        @Html.HiddenFor(d => d.DocumentId)
+
+                                        <input type="submit" value="Send" />
+                                    </div>
+
+
+
+                                </form>
+
+
+                            </div>
+
+                        }
+
+
+                        @if (tasks.TaskAssign && !tasks.TaskSubmit && !tasks.Approve && Model.SupervisorId == User.Identity.GetUserId())
+                        {
+
+                            <button class="btn btn-info ">Task Assign.</button>
+
+                        }
+
+                        @if (tasks.TaskAssign && !tasks.TaskSubmit && tasks.Approve)
+                        {
+
+                            <button class="btn btn-info ">Done</button>
+
+
+                        }
+
+                        @if (tasks.TaskSubmit == true && tasks.Approve == false && tasks.Reject == false)
+                        {
+
+                            <button class="btn btn-info ">Task submit. Waiting for reply</button>
+
+                        }
+
+                        @if (tasks.TaskSubmit == true && tasks.Approve == true && tasks.Reject == false)
+                        {
+
+                            <button class="btn btn-success ">Approved</button>
+
+                        }
+
+
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                }
+
+            </div>
+        </div>
+
+
+
+
+        <div class="col-lg-6">
+            <div class="row">   
+                @foreach (var tasks in Model.submitedWork)
+                {
+                    <div class="col-lg-6">
+                        <a href="~/SubmitTask/@tasks.Document.ConcatinateName" download="@tasks.Document.Name"><strong>@tasks.Document.Name</strong></a>
+
+                        <text>send on <strong>@tasks.Document.DateTime.ToShortDateString()</strong> at<strong> @tasks.Document.DateTime.ToShortTimeString()</strong></text>
+                    </div>
+
+                    <div class="col-lg-2" style="  ">
+
+                        @if (tasks.TaskAssign && !tasks.TaskSubmit && !tasks.Approve && Model.SupervisorId != User.Identity.GetUserId())
+                        {
+                            <label for="file">Submit Assign Work</label>
+                            <br />
+
+                            <div class="row">
+
+                                <form class="" id="form" action="/Group/SubmitAssignWork" method="post" enctype="multipart/form-data">
+
+                                    <div class="col-sm-2">
+
+                                        <input type="file" name="file" id="file" />
+
+                                    </div>
+
+
+                                    <div class="col-sm-2" style="  ">
+
+
+                                        @{
+                                            Model.DocumentId = tasks.Document.Id;
+
+                                        }
+
+                                        @Html.HiddenFor(m => m.Group.Id)
+                                        @Html.HiddenFor(d => d.DocumentId)
+
+                                        <input type="submit" value="Send" />
+                                    </div>
+
+
+
+                                </form>
+
+
+                            </div>
+                        }
+                        <div>
+
+                            @if (tasks.TaskAssign && !tasks.TaskSubmit && !tasks.Approve && Model.SupervisorId == User.Identity.GetUserId())
+                            {
+
+                                <button class="btn btn-info ">Task Assign.</button>
+
+                            }
+
+                            @if (tasks.TaskAssign && !tasks.TaskSubmit && tasks.Approve)
+                            {
+
+                                <button class="btn btn-info ">Done</button>
+
+
+                            }
+
+                            @if (tasks.TaskSubmit == true && tasks.Approve == false && tasks.Reject == false)
+                            {
+
+                                <button class="btn btn-info ">Task submit. Waiting for reply</button>
+
+                            }
+
+                            @if (tasks.TaskSubmit == true && tasks.Approve == true && tasks.Reject == false)
+                            {
+
+                                <button class="btn btn-success ">Approved</button>
+
+                            }
+                        </div>
+
+                    </div>
+
+                    <br />
+                    <br />
+                    <br />
+             
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+   

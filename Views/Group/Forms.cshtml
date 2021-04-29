@@ -1,0 +1,71 @@
+﻿@model FYPManagment.ViewModel.FormViewModel
+@{
+    ViewBag.Title = "Forms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Student Forms</h2>
+<div id="forms">
+    @foreach (var form in Model.forms)
+    {
+
+        <div class="row">
+
+            <div class="col-lg-4 text">
+                <text><strong>@form.Student.FirstName @form.Student.LastName</strong> member of <strong>@form.Group.Name</strong> submit a form </text>
+                <a href="~/SubmitForm/@form.ConcatinateName" download="@form.FormName"><strong>@form.FormName</strong></a>
+
+                <text>send on <strong>@form.DateTime.ToShortDateString()</strong> at<strong> @form.DateTime.ToShortTimeString()</strong></text>
+            </div>
+
+            @if (form.IsCollected)
+            {
+                <div class="col-lg-5">
+                    <button class="btn btn-info ">Collected</button>
+                </div>
+            }
+            else
+            { 
+                <div class="col-lg-5">
+                    <button class="btn btn-default js-collect" data-submitForm-id="@form.Id">Mark As Collect?</button>
+                </div>
+
+            }
+
+
+        </div>
+        <br />
+        <br />
+
+
+    }
+</div>
+@section scripts{
+    
+    <script>
+
+        $(document).ready(function () {
+
+            $("#forms").on('click', '.js-collect', function () {
+
+                var button = $(this);
+
+                var submitFormId = button.attr('data-submitForm-id');
+
+                $.post("/Api/CollectForms/" + submitFormId, function () {
+
+
+                })
+                    .done(function () {
+
+                        button.removeClass('btn-default').addClass('btn-info').text('Collected');
+                    });
+
+            });
+
+        });
+
+    </script>
+
+    }
+

@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNet.Identity
+@model FYPManagment.ViewModel.NewGroupViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div style="position:relative">
+
+    <div class="">
+
+        <form class="pull-right" id="form" action="/Group/Index" method="post" enctype="multipart/form-data">
+
+            <label for="file">Submit Proposal:</label>
+
+            <input type="file" name="file" id="file" />
+
+            <br />
+
+            <button class="btn btn-info  myGroup" >
+                Check Assign Work
+            </button>
+
+
+            @Html.HiddenFor(g => g.Group.Id)
+            <input type="submit" value="Send" />
+        </form>
+        @if (Model.Group.ProposalSend == true && Model.Group.ProposalAccepted == false && Model.Group.ProposalRejected == false)
+        {
+            <br />
+            <br />
+            <button class=" btn btn-info " type="button">Proposal Send. Waiting for response</button>
+
+
+        }
+
+        @if (Model.Group.ProposalSend == true && Model.Group.ProposalAccepted == true && Model.Group.ProposalRejected == false)
+        {
+            <br />
+            <br />
+
+            <button class=" btn btn-success " type="button">Proposal Approved</button>
+            <text></text>
+
+
+
+        }
+
+        @if (Model.Group.ProposalSend == true && Model.Group.ProposalAccepted == false && Model.Group.ProposalRejected == true)
+        {
+            <br />
+            <br />
+
+            <button class=" btn btn-danger " type="button">Proposal Rejected</button>
+            <text></text>
+
+
+
+        }
+
+
+
+
+
+        @if (User.Identity.GetUserId() == Model.GroupMembers.Single(m => m.MemberRole == FYPManagment.Models.MemberRole.SuperVisor).MemberId)
+        {
+            <form class="pull-right" id="form" action="/Group/AssignWork" method="post" enctype="multipart/form-data">
+
+                <label for="file">Assign Work</label>
+
+                <input type="file" name="file" id="assignWork" />
+                <br />
+                @Html.HiddenFor(g => g.Group.Id)
+
+                <button class="btn btn-primary">Send</button>
+            </form>
+
+        }
+    </div>
+
+
+    <div>
+
+        <h1>Group Members</h1>
+
+        <ul style="">
+            @foreach (var member in Model.GroupMembers)
+            {
+                <li class="list">
+                    <div>
+                        <div class="member">
+
+
+                            @member.Member.UserName
+                        </div>
+                        <div class="memberId">
+
+                            @member.MemberRole
+
+                        </div>
+                    </div>
+                </li>
+
+            }
+        </ul>
+    </div>
+
+
+</div>
+
+
+@section scripts
+{
+
+
+}

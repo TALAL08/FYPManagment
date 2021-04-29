@@ -1,0 +1,214 @@
+﻿@model FYPManagment.ViewModel.NewGroupViewModel
+@{
+    ViewBag.Title = "ReviewWork";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Documents</h2>
+
+<div class="row" style="position:relative">
+
+    <div class="col-lg-7" style="position:relative">
+        <h3>Submited Files</h3>
+        <br />
+        <div id="buttons" class="row">
+            @foreach (var file in Model.submitedWork)
+            {
+
+                <div class="col-lg-3">
+                    <strong>  @file.Document.Sender.FirstName</strong> member of <strong>@file.Group.Name</strong> send you a document
+                    <a href="~/SubmitTask/@file.Document.ConcatinateName" download="@file.Document.Name"><strong>@file.Document.Name</strong></a>
+
+                </div>
+
+                <div  class="col-lg-9 ">
+                    @if (file.TaskAssign == false && file.TaskSubmit == true && file.Approve == false && file.Reject == true)
+
+                    {
+
+                        <button class="btn btn-danger">Rejected</button>
+
+                    }
+
+                    @if (file.TaskAssign == false && file.TaskSubmit == true && file.Approve == true && file.Reject == false)
+                    {
+
+                        <button class="btn btn-success">Approved</button>
+                    }
+
+                    @if (file.TaskAssign == false && file.TaskSubmit == true && file.Approve == false && file.Reject == false)
+                    {
+
+                        <button id="Approve" data-group-id="@Model.Group.Id" data-document-id="@file.Document.Id" class="btn btn-default btn-sm js-approve">Approve Work?</button>
+                        <button id="Reject" data-group-id="@Model.Group.Id" data-document-id="@file.Document.Id" class="btn btn-danger btn-sm js-reject">Reject Work?</button>
+
+                    }
+
+
+                </div>
+
+                <br />
+                <br />
+                <br />
+                <br />
+            }
+        </div>
+    </div>
+
+
+    <div class="col-lg-4">
+
+        <h3>Tasks i Give</h3>
+        <br />
+
+        <div id="completed" class="row">
+            @foreach (var task in Model.AssignWorks)
+            {
+
+                <div class="col-lg-5">
+
+                    <a href="~/AssignTask/@task.Document.ConcatinateName" download="@task.Document.Name"><strong>@task.Document.Name</strong> </a>
+                    Assign on <strong>@task.Document.DateTime</strong>
+
+                </div>
+
+
+                <div class="col-lg-6">
+
+                    @if (task.Approve == true)
+                    {
+                        <button type="button" class="btn btn-success ">Completed</button>
+                    }
+
+                    else
+
+                    {
+
+
+                        <button  data-group-id="@task.GroupId" data-document-id="@task.DocumentId" type="button" class="btn btn-default js-compelete">Mark As Completed?</button>
+
+                    }
+
+                </div>
+
+
+
+
+                <br />
+                <br />
+                <br />
+                <br />
+
+
+
+            }
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $("#buttons").on('click', '.js-approve', function () {
+                console.log('a');
+                var vm = {};
+
+                var button = $(this);
+
+                var groupId = button.attr("data-group-id");
+                var documentId = button.attr("data-document-id");
+
+                vm.groupId = groupId;
+                vm.documentId = documentId;
+
+                $.ajax({
+
+                    url: "/Api/TaskApprovals",
+                    method: "Post",
+                    data: vm
+
+                })
+                    .done(function () {
+
+                        location.reload();
+
+
+
+                    });
+
+            });
+
+            $("#buttons").on('click', 'js-reject', function () {
+
+                var vm = {};
+
+                var button = $(this);
+
+                var groupId = button.attr("data-group-id");
+                var documentId = button.attr("data-document-id");
+
+                vm.groupId = groupId;
+                vm.documentId = documentId;
+
+                $.ajax({
+
+                    url: "/Api/TaskRejects",
+                    method: "Post",
+                    data: vm
+
+                })
+                    .done(function () {
+
+                        location.reload();
+                    });
+
+            });
+
+
+
+            $("#completed").on('click', '.js-compelete', function () {
+                var vm = {};
+
+                var button = $(this);
+
+                var groupId = button.attr("data-group-id");
+                var documentId = button.attr("data-document-id");
+
+                vm.groupId = groupId;
+                vm.documentId = documentId;
+                $.ajax({
+
+                    url: "/Api/MarkTasks",
+                    method: "Post",
+                    data: vm
+
+                })
+                    .done(function () {
+
+                        location.reload();
+
+
+                    }).fail(function () { alert('fail'); });
+
+            });
+
+
+
+
+
+        });
+
+    </script>
+}

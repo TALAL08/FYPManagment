@@ -1,0 +1,321 @@
+﻿
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Add Group</h2>
+
+<form id="group">
+
+    <div class="row">
+
+        <div class=" col-lg-3">
+
+            <div class="form-group">
+                <label>Group Name</label>
+                <input id="groupName" required type="text" value="" class="form-control" />
+
+            </div>
+
+            <div class="form-group">
+                <label>Supervisor</label>
+                <br />
+                <input id="supervisor" type="text" value="" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Co-Ordinator</label>
+                <br />
+                <input id="coordinator" type="text" value="" class="form-control typeahead" />
+            </div>
+
+            <div class="form-group">
+                <label>Group Members</label>
+                <br />
+                <input id="member" type="text" value="" class="form-control typeahead" />
+            </div>
+
+            <div class="form-group">
+                <button id="submit" class="btn btn-primary btn-sm ">Submit</button>
+
+            </div>
+
+        </div>
+
+        <div class=" col-lg-4" style="margin-top:22px">
+
+            <ul id="superVisor" class="list-group"></ul>
+            <ul id="coOrdinator" class="list-group"></ul>
+            <ul id="members" class="list-group"></ul>
+
+        </div>
+    </div>
+</form>
+
+@section scripts
+{
+
+    <script>
+
+        $(document).ready(function () {
+
+            $(document).on('keyup keypress', 'form input[type="text"]', function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            var vm = {
+                name: "null",
+                memberIds: [],
+                supervisorId: 0,
+                coordinatorId: 0
+            };
+
+            var users = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('userName'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/Api/Users?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+            $('#supervisor').typeahead({
+
+                minLength: 1,
+                highlight: true
+
+            },
+                {
+                    name: 'users',
+                    display: 'userName',
+                    source: users
+                }).on("typeahead:select", function (e, user) {
+                    
+                    if (!vm.memberIds.includes(user.id) && vm.coordinatorId != user.id) {
+
+                        vm.name = "name";
+
+                        $("#superVisor").append("<li class=' list-group-item length' id='" + user.id + "'><span style='margin-right:93px; color:#00a4aa;font-weight:bold; font-size:18px;  '> Supervisor</span><span style='font-weight:bold; font-size:18px;' >" + user.userName + "</span><button  user-id='" + user.id + "' type='button' class='btn btn-sm btn-danger pull-right js-remove listButton' > Remove</button></li>");
+                        $("#supervisor").typeahead("val", "");
+
+                        $("#supervisor").attr("readOnly", "readOnly");
+                        vm.supervisorId = user.id;
+                    }
+                    else
+                        bootbox.alert("<Strong>" + user.userName + "</Strong> Already added in the list");
+
+                });
+
+            var users = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('userName'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/Api/Users?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+            $('#coordinator').typeahead({
+
+                minLength: 1,
+                highlight: true
+
+            },
+                {
+                    name: 'users',
+                    display: 'userName',
+                    source: users
+                }).on("typeahead:select", function (e, user) {
+
+                    if (!vm.memberIds.includes(user.id) && vm.supervisorId != user.id) {
+
+                        vm.name = $("#groupName").val();
+
+                        $("#coOrdinator").append("<li class=' list-group-item length' id='" + user.id + "'><span style='margin-right:75px; color:#00a4aa;font-weight:bold; font-size:18px;  '> Co-Ordinator</span><span style='font-weight:bold; font-size:18px;' >" + user.userName + "</span><button  user-id='" + user.id + "' type='button' class='btn btn-sm btn-danger pull-right js-remove listButton' > Remove</button></li>");
+                        $("#coordinator").typeahead("val", "");
+
+                        $("#coordinator").attr("readOnly", "readOnly");
+                        vm.coordinatorId = user.id;
+                    }
+                    else
+                        bootbox.alert("<Strong>" + user.userName + "</Strong> Already added in the list");
+
+                });
+
+            var users = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('userName'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/Api/Users?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+            $('#member').typeahead({
+
+                minLength: 1,
+                highlight: true
+
+            },
+                {
+                    name: 'users',
+                    display: 'userName',
+                    source: users
+                }).on("typeahead:select", function (e, user) {
+
+                    if (!vm.memberIds.includes(user.id) && vm.supervisorId != user.id && vm.coordinatorId != user.id) {
+
+
+                        $("#members").append("<li class=' list-group-item length' id='" + user.id + "'><span style='margin-right:120px; color:#00a4aa;font-weight:bold; font-size:18px;  '> Student</span><span style='font-weight:bold; font-size:18px;' >" + user.userName + "</span><button  user-id='" + user.id + "' type='button' class='btn btn-sm btn-danger js-remove pull-right listButton' > Remove</button></li>");
+                        $("#member").typeahead("val", "");
+
+                        vm.memberIds.push(user.id);
+                    }
+                    else
+                        bootbox.alert("<Strong>" + user.userName + "</Strong> Already added in the list");
+
+                });
+
+            $("#coOrdinator").on('click', '.js-remove', function () {
+
+                var button = $(this);
+
+                bootbox.dialog({
+
+                    title: "<Strong>Remove</Strong>",
+                    message: "Remove this member?",
+                    size: 'medium',
+
+                    buttons: {
+
+                        Yes: {
+
+                            label: "Remove",
+                            className: 'btn-danger',
+                            callback: function () {
+
+                                button.parents("li").remove();
+
+                                $("#coordinator").removeAttr("readOnly");
+
+                                vm.coordinatorId = undefined;
+                            }
+                        }
+                    }
+                });
+            });
+            $("#superVisor").on('click', '.js-remove', function () {
+
+                var button = $(this);
+
+                bootbox.dialog({
+
+                    title: "<Strong>Remove</Strong>",
+                    message: "Remove this member?",
+                    size: 'medium',
+
+                    buttons: {
+
+                        Yes: {
+
+                            label: "Remove",
+                            className: 'btn-danger',
+                            callback: function () {
+
+                                button.parents("li").remove();
+
+                                $("#supervisor").removeAttr("readOnly");
+
+                                vm.supervisorId = undefined;
+                            }
+                        }
+                    }
+                });
+
+            });
+            $("#members").on('click', '.js-remove', function () {
+
+                var button = $(this);
+
+                bootbox.dialog({
+
+                    title: "<Strong>Remove</Strong>",
+                    message: "Remove this member?",
+                    size: 'medium',
+
+                    buttons: {
+
+                        Yes: {
+
+                            label: "Remove",
+                            className: 'btn-danger',
+                            callback: function () {
+
+                                button.parents("li").remove();
+                                var index = vm.memberIds.indexOf(button.attr("user-id"));
+                                vm.memberIds.splice(index);
+                            }
+                        }
+                    }
+                });
+            });
+            vm.name = vm.coordinatorId;
+
+            $("#group").on('submit', function (e) {
+
+               
+                e.preventDefault();
+                vm.name = $("#groupName").val();
+
+                if (vm.supervisorId == 0 || vm.coordinatorId == 0 || vm.memberIds.length == 0 || vm.name == "null") {
+
+                    return bootbox.dialog({
+
+                        title: "<Strong>Error</Strong>",
+                        message: "Something is missing in the group. please check all the members",
+                        size: 'medium'
+
+                    });
+                }
+
+                console.log(vm);
+                $.ajax({
+                    url: "/Api/Groups",
+                    method: "post",
+                    data: vm
+                })
+                    .done(function () {
+                        toastr.success("Group created successfully.")
+
+                        $("#supervisor").typeahead("val", "");
+                        $("#coordinator").typeahead("val", "");
+                        $("#member").typeahead("val", "");
+
+                        $("#superVisor").empty();
+                        $("#coOrdinator").empty();
+                        $("#members").empty();
+
+                        vm = {
+                            name: "null",
+                            memberIds: [],
+                            supervisorId: 0,
+                            coordinatorId:0
+                        };
+
+                        validator.resetForm();
+                    })
+                    .fail(function () {
+
+                        toastr.error("something unexpected happend.")
+                    });
+
+                return false;
+            });
+        });
+
+    </script>
+
+}

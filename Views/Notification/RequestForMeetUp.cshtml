@@ -1,0 +1,126 @@
+﻿@model FYPManagment.ViewModel.NotifiacationViewModel
+@{
+    ViewBag.Title = "RequestForMeetUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>RequestForMeetUp</h2>
+
+<strong>@Model.Notification.Sender.FirstName</strong> member of <strong>@Model.Notification.Group.Name</strong> request you for a meet-up.
+
+<br />
+<br />
+
+@if (Model.Notification.Group.MeetUpRequestSend == true && Model.Notification.Group.MeetUpRequestApproved == false && Model.Notification.Group.MeetUpRequestReject == false)
+{
+
+    <button id="accept" data-group-id="@Model.Notification.Group.Id" class="btn btn-default">Approved?</button>
+    <button id="reject" data-group-id="@Model.Notification.Group.Id" class="btn btn-default">Reject?</button>
+
+}
+
+@if (Model.Notification.Group.MeetUpRequestSend == true && Model.Notification.Group.MeetUpRequestApproved == true && Model.Notification.Group.MeetUpRequestReject == false)
+{
+
+    <button type="button" class="btn btn-success">Meet-up Request Approved</button>
+
+}
+@if (Model.Notification.Group.MeetUpRequestSend == true && Model.Notification.Group.MeetUpRequestApproved == false && Model.Notification.Group.MeetUpRequestReject == true)
+{
+
+    <button type="button" class="btn btn-info">Meet-up Request Rejected</button>
+
+}
+
+
+
+
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $("#accept").on('click', function () {
+
+                var button = $(this);
+                var groupId = button.attr("data-group-id");
+
+                var vm = {}
+                vm.groupId = groupId;
+                var msg = "Set date";
+
+                //for (var i = 0; i < 2; i++) {
+                //     bootbox.prompt({
+                //    title: "",
+
+                //    inputType: "'datetime-local",
+                //    callback: function (result) {
+                //        console.log(result);
+                //    }
+                //});
+
+
+            //}
+               
+
+                bootbox.dialog({
+                    title: "<Strong>Meet-Up Date</Strong>",
+                    message: "<input id='dateTime' type='datetime-local' required />",
+                    size: 'medium',
+                    buttons: {
+                        Yes: {
+                            label: "Send",
+                            className: 'btn-primary',
+                            callback: function () {
+                                //console.log(result);
+                                vm.dateTime = $("#dateTime").val();
+                                console.log(vm.dateTime);
+                                //$.ajax({
+
+                                //    url: "/Api/MeetUpApprovals",
+                                //    method: "Post",
+                                //    data: vm
+
+                                //})
+                                //    .done(function () {
+                                //        toastr.success("Meeting Date send to group members")
+
+                                //        $("#accept").removeClass("btn-default").addClass("btn-success").text("Approved");
+                                //        $("#reject").hide();
+                                //    });
+                            }
+
+                        }
+                    }
+                });
+
+
+
+            });
+
+            $("#reject").on('click', function () {
+
+                var button = $(this);
+                var groupId = button.attr("data-group-id");
+                $.ajax({
+
+                    url: "/Api/MeetUpReject/" + groupId,
+                    method: "Post",
+
+                })
+                    .done(function () {
+
+                        $("#reject").removeClass("btn-default").addClass("btn-danger").text("Rejected");
+
+
+                    });
+
+            });
+
+        });
+
+    </script>
+
+}

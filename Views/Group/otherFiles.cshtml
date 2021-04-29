@@ -1,0 +1,20 @@
+﻿@model FYPManagment.ViewModel.ReviewWorkViewModel
+@{
+    ViewBag.Title = "otherFiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>otherFiles</h2>
+
+
+@foreach (var file in Model.AllDocuments)
+{
+    
+    <div >
+        
+        <strong>  @file.Document.Sender.FirstName</strong> member of <strong>@file.Group.Name</strong> send you a file
+        <a href="~/otherFiles/@file.Document.ConcatinateName" download="@file.Document.Name"><strong>@file.Document.Name</strong></a>
+
+    </div>
+}
+

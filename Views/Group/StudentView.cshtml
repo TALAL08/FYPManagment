@@ -1,0 +1,443 @@
+﻿@using System
+@using Microsoft.AspNet.Identity;
+@model FYPManagment.ViewModel.NewGroupViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div style="position:relative;padding-bottom:600px; padding-top:40px">
+
+        <div style="position:absolute; margin-left:1240px; ">
+            <h3>Send Files</h3>
+            <br />
+
+            <form class="pull-right" action="/Group/Index" method="post" enctype="multipart/form-data">
+
+                <label for="file">Submit Proposal</label>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <input type="file" name="file" id="assignWork" />
+                        <br />
+                        @Html.HiddenFor(g => g.Group.Id)
+
+                    </div>
+
+                    <div class="col-md-1">
+
+                        <button class="btn btn-primary btn-sm">Send</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            <br />
+
+
+            <form class="" action="/Group/SendDocument" method="post" enctype="multipart/form-data">
+
+
+
+
+
+
+                <label for="file">Send Document</label>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <input type="file" name="file" id="assignWork" />
+                        <br />
+                        @Html.HiddenFor(g => g.Group.Id)
+
+                    </div>
+
+                    <div class="col-md-1">
+
+                        <button class="btn btn-primary btn-sm">Send</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            <form class="" action="/Group/SubmitForm" method="post" enctype="multipart/form-data">
+
+                <label for="file">Submit Form</label>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <input type="file" name="file" id="submitForm" />
+                        <br />
+                        @Html.HiddenFor(g => g.Group.Id)
+
+                    </div>
+
+                    <div class="col-md-1">
+
+                        <button class="btn btn-primary btn-sm">Send</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+
+
+
+        </div>
+
+        <div style="position:absolute; width:950px; margin-left:250px;">
+
+            @Html.Partial("_Chat")
+
+        </div>
+
+        <div style="position:absolute; margin-left:1520px; ">
+            <h3>Alerts</h3>
+
+            @if (Model.GradeUpload)
+            {
+                <br />
+                <div>
+
+                    <button id="gradePresentation" data-group-id="@Model.Group.Id" type="button" class="btn btn-info" onclick="location.href='@Url.Action("Grade", "Group", new { Id = Model.Group.Id })'  ">View Grade </button>
+                </div>
+            }
+
+
+            @if (Model.Document.Count > 0)
+            {
+                <br />
+                <button id="check" class="btn btn-info " type="button" onclick="location.href='@Url.Action("ViewAssignWork", "Group", new { Id = Model.Group.Id } )'">
+                    Check Assign Work
+                </button>
+                <br />
+            }
+
+
+            @if (Model.Group.ProposalSend && !Model.Group.ProposalAccepted && !Model.Group.ProposalRejected)
+            {
+
+                <br />
+                <button class=" btn btn-info " type="button">Proposal Send. Waiting for response</button>
+
+
+            }
+
+            @if (Model.Group.ProposalSend && Model.Group.ProposalAccepted && !Model.Group.ProposalRejected)
+            {
+                <br />
+                <button class=" btn btn-success " type="button">Proposal Approved</button>
+
+            }
+
+            @if (Model.Group.ProposalSend == true && Model.Group.ProposalAccepted == false && Model.Group.ProposalRejected == true)
+            {
+
+                <br />
+
+                <button class=" btn btn-danger" type="button">Proposal Rejected</button>
+
+
+
+
+            }
+
+            @if (Model.Group.MeetUpRequestSend == true && Model.Group.MeetUpRequestApproved == false && Model.Group.MeetUpRequestReject == false)
+            {
+                <br />
+                <br />
+                <button type="button" class="btn btn-info">Request Send</button>
+
+            }
+            @if (Model.Group.MeetUpRequestSend == true && Model.Group.MeetUpRequestApproved == true && Model.Group.MeetUpRequestReject == false)
+            {
+                <br />
+                <br />
+                <button type="button" class="btn btn-success">Meeting at @Model.Group.MeetUpDateTime </button>
+
+            }
+            @if (Model.Group.MeetUpRequestSend == true && Model.Group.MeetUpRequestApproved == false && Model.Group.MeetUpRequestReject == true)
+            {
+                <br />
+                <br />
+                <button type="button" class="btn btn-info">Meetup Request Reject</button>
+
+            }
+
+            @if (Model.Group.PresentationDate != null)
+            {
+                <br />
+                <br />
+
+                <div>
+
+                    <button class="btn btn-info" type="button">Presentation at <strong> @Model.Group.PresentationDate </strong></button>
+
+                </div>
+
+
+            }
+            <br />
+
+            @if (Model.SubmitForms.Count > 0)
+            {
+                <br />
+                <div>
+                    <button class="btn btn-info" onclick="location.href='@Url.Action("ViewSubmitForms", "Group", new { Id = Model.Group.Id } )'">View Submited Forms</button>
+
+                </div>
+            }
+
+            @if (Model.Forms.Count > 0)
+            {
+                <br />
+                <div class="form-group">
+
+                    @Html.DropDownListFor(m => m.Forms, new SelectList(Model.Forms, "Id", "FormName"), "SelectForm", new { @class = "form-control js-form" })
+
+                </div>
+
+                <div>
+                    <a class="btn btn-primary" id="a" download><strong>Download</strong> </a>
+
+                </div>
+
+            }
+
+            <br />
+            <br />
+            <h3>Actions</h3>
+
+            <div>
+
+                <button id="meet-up" data-group-id="@Model.Group.Id" type="button" class="btn btn-default">Request a Meet-up ?</button>
+            </div>
+
+            @*<div>
+
+            <button id="meetingsAndPresentationsDates" data-group-id="@Model.Group.Id" type="button" class="btn btn-info">Meetings & Presentations Dates</button>
+
+        </div>*@
+
+        </div>
+
+
+        <div style="position:absolute; margin-left:-50px">
+
+            <h1 style="    margin-top: -1px;">Group Members</h1>
+
+            <ul style="">
+                @foreach (var member in Model.GroupMembers)
+                {
+                    <li class="list">
+                        <div>
+                            <div class="member">
+
+
+                                @member.Member.FirstName
+                            </div>
+                            <div class="memberId">
+
+                                @member.MemberRole
+
+                            </div>
+                        </div>
+                    </li>
+
+                }
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+
+            $("select.js-form").change(function () {
+
+                var formName = $(this).children("option:selected").text();
+
+                if (formName != "SelectForm") {
+
+                    $("#a").attr("href", "/forms/" + formName + ".docx");
+                    $("#a").attr("download", formName + ".docx");
+
+                }
+                else {
+                    $("#a").removeAttr("href");
+                    $("#a").removeAttr("download");
+
+                }
+
+
+
+
+
+            });
+
+
+            $("#meetingsAndPresentationsDates").on('click', function () {
+
+                var button = $(this);
+
+                $.getJSON('/Api/MeetingsAndPresentations/' + button.attr("data-group-id"), function (MeetingAndPresentationDates) {
+                    var meetingAndPresentationDates = [];
+                    var meetingDates = [];
+                    var presentationDates = [];
+
+                    for (var meetingAndPresentationDate of MeetingAndPresentationDates) {
+
+                        meetingAndPresentationDates.push(meetingAndPresentationDate);
+
+                    }
+
+
+
+                    for (var Date of meetingAndPresentationDates) {
+
+                        if (Date.meetingDateTime != null) {
+
+                            meetingDates.push(Date.meetingDateTime)
+                        }
+
+                        if (Date.presentationDateTime != null) {
+
+                            presentationDates.push(Date.presentationDateTime);
+                        }
+
+                    }
+
+                    console.log(presentationDates);
+
+                })
+
+
+            });
+
+
+
+            $("#meet-up").on('click', function () {
+
+                var button = $(this);
+                var groupId = button.attr("data-group-id");
+
+                $.ajax({
+
+                    url: "/Api/RequestMeetUps/" + groupId,
+                    method: "Post"
+
+                })
+                    .done(function () {
+
+                        location.reload();
+
+
+                    });
+
+            });
+
+            $("#done").on('click', function () {
+
+                var button = $(this);
+
+                $.ajax({
+
+                    url: "/Api/Notifications/" + button.attr("data-document-id"),
+                    method: "Post",
+
+                })
+                    .done(function () {
+
+                        $("#done").removeClass("btn-default").addClass("btn-success").text("Done");
+
+
+                    });
+
+            });
+
+        });
+
+    </script>
+
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the chat page and send messages.-->
+    <script>
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            var chat = $.connection.chatHub;
+            // Create a function that the hub can call back to display messages.
+
+            // Get the user name and store it to prepend to messages.
+
+            var Currentname = $('#displayname').attr('data-name');
+
+            chat.client.addNewMessageToPage = function (name, message, date, time) {
+                if (name == Currentname) {
+                    // Add the message to the page.
+                    $('#discussion').append(" <li class='mymsg' > <div class='msgArea'> <span class='msgHeading'></span><div class='msg'> " + htmlEncode(message) + "</div><span class='msgtime'>" + date + "-" + time + "</span></div></p>");
+                    //$('#discussion').append('<p style="color:green; text-align:left; width:500px"><strong>' + name
+                    //    + ' </strong> ' + htmlEncode(message) + '</p>');
+                }
+                else {
+                    // Add the message to the page.
+
+                    $('#discussion').append(" <li class='othermsg' > <div class='msgAreaOther'> <span class='msgHeadingOther'>" + name + "</span><div class='msgOther'> " + htmlEncode(message) + "</div><span class='msgtimeOther'>" + date + "-" + time + "</span></div></li>");
+
+
+                }
+            };
+
+            $('#displayname').val(Currentname);
+            // Set initial focus to message input box.
+            $('#message').focus();
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+
+
+                    var button = $(this);
+
+                    var groupId = button.attr('data-group-id');
+
+                    var senderId = button.attr('data-sender-id');
+                    // Call the Send method on the hub.
+
+
+
+                    chat.server.send($('#displayname').val(), $('#message').val(), groupId, senderId);
+                    // Clear text box and reset focus for next comment.
+                    $('#message').val('').focus();
+                });
+            });
+        });
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}

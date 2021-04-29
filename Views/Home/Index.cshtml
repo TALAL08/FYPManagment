@@ -1,0 +1,66 @@
+﻿@model FYPManagment.ViewModel.HomeViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>My Groups</h2>
+<div>
+
+    <ul class="listItem" >
+
+        @foreach (var group in Model.Groups)
+        {
+            <li >
+                <button class="btn btn-info  myGroup" onclick="location.href='@Url.Action("Details", "Group", new { Id = group.Id } )'"    >
+                @group.Name</button>
+            </li>
+            <br />
+
+        }
+
+    </ul>
+
+</div>
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $("#Approve").on('click', function () {
+
+                console.log('a');
+
+                var button = $(this);
+
+                $.ajax({
+
+
+                    url: "/Api/Documents/" + button.attr("data-document-id"),
+
+                    method: "Post",
+
+                    success: function () {
+
+                        button.removeClass("btn-default");
+                        button.addClass("btn-info");
+
+                        $("#Reject").hide();
+                    }
+
+
+                });
+
+
+            });
+
+
+
+
+            });
+
+        });
+
+    </script>
+}

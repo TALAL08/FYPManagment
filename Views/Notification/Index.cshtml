@@ -1,0 +1,78 @@
+﻿@model FYPManagment.ViewModel.NotifiacationViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Proposal</h2>
+
+<div>
+    <strong>  @Model.Document.Sender.FirstName</strong> member of <strong>@Model.Notification.Group.Name</strong> send you a proposal
+    <a href="~/proposals/@Model.Document.ConcatinateName" download="@Model.Document.Name"><h1>@Model.Document.Name</h1></a>
+
+  
+    
+    
+    @if (Model.Group.ProposalSend == true && Model.Group.ProposalAccepted == false && Model.Group.ProposalRejected == true)
+    {
+        <button class="btn btn-danger">Rejected</button>
+    }
+
+    @if (Model.Group.ProposalSend == true && Model.Group.ProposalAccepted == true && Model.Group.ProposalRejected == false)
+    {
+        <button class="btn btn-success">Approved</button>
+    }
+
+    @if (Model.Group.ProposalSend == true && Model.Group.ProposalAccepted == false && Model.Group.ProposalRejected == false)
+    {
+
+        <button id="Approve" data-group-id="@Model.Group.Id" class="btn btn-default btn-sm">Approve the proposal?</button>
+        <button id="Reject" data-group-id="@Model.Group.Id" class="btn btn-danger btn-sm">Reject the proposal?</button>
+
+    }
+</div>
+
+@section scripts
+{
+    <script>
+
+        $("#Approve").on('click', function () {
+
+            var button = $(this);
+
+            $.ajax({
+
+                url: "/Api/ProposalApprovals/" + button.attr("data-group-id"),
+                method: "Post",
+
+            })
+                .done(function () {
+
+                    $("#Approve").removeClass("btn-default").addClass("btn-info").text("Approved");
+                    $("#Reject").hide();
+
+                });
+
+        });
+
+        $("#Reject").on('click', function () {
+
+            var button = $(this);
+
+            $.ajax({
+
+                url: "/Api/RejectProposals/" + button.attr("data-group-id"),
+                method: "Post",
+
+            })
+                .done(function () {
+
+                    $("#Reject").removeClass("btn-default").addClass("btn-danger").text("Rejected");
+                    $("#Approve").hide();
+
+                });
+
+        });
+
+    </script>
+}

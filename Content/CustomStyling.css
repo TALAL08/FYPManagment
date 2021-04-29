@@ -1,0 +1,205 @@
+﻿.navbar-inverse {
+    background-color: #00a4aa;
+    border-color: #ffffff;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #f0efef;
+    }
+
+        .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+            font-weight:bold;
+        }
+
+    .navbar-inverse .navbar-brand {
+        color: #f0efef;
+    }
+
+        .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+            
+            font-weight: bold;
+            color: #fff;
+            background-color: transparent;
+        }
+
+        
+.myGroup {
+
+    height: 50px;
+    width: 200px;
+    border-radius:100px;
+    
+
+}
+
+h2{
+    font-weight:bold;
+    margin-top:30px;
+    margin-bottom:40px;
+}
+
+.listItem {
+    list-style: none;
+}
+
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control, .grade {
+    background-color: transparent;
+    opacity: 1;
+}
+
+.form-control
+{
+    height:40px;
+    width:500px;
+    font-size:17px;
+    border-radius:10px
+}
+
+.text{
+    font-size:17px;
+}
+
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #def9ff;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.panel-default > .panel-heading {
+    color: #f0efef;
+    background-color: #2c5b6c;
+    border-color: #ddd;
+    border-radius: 10px;
+}
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.msgArea {
+    padding: 10px;
+    border-radius: 40px;
+    display: block;
+    min-width: 200px;
+    max-width: 500px;
+    width: auto;
+    margin-left: 400px; 
+    background-color: #00a4aa;
+}
+
+.msgHeading {
+    color: #000000;
+    font-weight: bold;
+    font-size: 22px;
+    padding-left: 10px;
+    display: block;
+
+}
+.msgtime {
+    font-weight: bold;
+    font-size: 12px;
+    padding-left: 17px;
+    display: block;
+
+}
+.msg {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 15px;
+    color: white;
+    padding-left: 13px;
+    display: block;
+
+    word-wrap:break-word;
+ 
+    padding-right: 14px;
+}
+
+.mymsg {
+     margin-bottom:10px;
+}
+
+
+.msgAreaOther {
+
+    /*text-align: right;*/
+    padding: 10px;
+    border-radius: 40px;
+    display: block;
+     max-width: 500px;
+   
+    background-color: white;
+}
+
+.msgHeadingOther {
+    /*text-align: right;*/
+    color: #00a4aa;
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.msgtimeOther {
+    /*text-align: right;*/
+    font-weight: bold;
+    font-size: 12px;
+    padding-left: 15px;
+}
+
+.msgOther {
+    /*text-align:right;*/
+    padding-top: 1px;
+    padding-bottom: 2px;
+    font-size: 15px;
+    color: #000000;
+    padding-left: 13px;
+}
+.othermsg{
+    margin-left:-42px;
+    margin-bottom:10px;
+  
+}
+
+.chatlist{
+    list-style:none;
+}
+.listButton{
+    margin-top:-5px;    
+}

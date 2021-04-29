@@ -1,0 +1,41 @@
+﻿@model FYPManagment.ViewModel.NewGroupViewModel
+@{
+    ViewBag.Title = "ViewSubmitForms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Submit Forms</h2>
+
+@foreach (var form in Model.SubmitForms)
+{
+
+    <div class="row">
+
+        <div class="col-lg-3 text">
+           
+            <a href="~/SubmitForm/@form.ConcatinateName" download="@form.FormName"><strong>@form.FormName</strong></a>
+
+            <text>submit on <strong>@form.DateTime.ToShortDateString()</strong> at<strong> @form.DateTime.ToShortTimeString()</strong></text>
+        </div>
+
+        @if (form.IsCollected)
+        {
+            <div class="col-lg-5">
+                <button class="btn btn-success ">Collected</button>
+            </div>
+        }
+        else
+        {
+            <div class="col-lg-5">
+                <button class="btn btn-info " data-submitForm-id="@form.Id">Waiting For response</button>
+            </div>
+
+        }
+
+
+    </div>
+    <br />
+    <br />
+
+
+}

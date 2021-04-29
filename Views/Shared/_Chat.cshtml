@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNet.Identity;
+@model FYPManagment.ViewModel.NewGroupViewModel
+
+
+@{
+    ViewBag.Title = "Chat";
+}
+<style>
+    div.panel-body {
+        overflow: scroll;
+    }
+</style>
+
+<div class="chat-panel panel panel-default">
+    <div class="panel-heading">
+        <h1>
+            Discussion Panel
+        </h1>
+        <i class="fa fa-paper-plane fa-fw"></i>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body" id="chat" style="height:430px;">
+        <input type="hidden" id="displayname" data-name="@Model.user.FirstName" />
+
+        <ul id="discussion" class="chatlist">
+
+            @if (Model.GroupChat.Count > 0)
+            {
+                foreach (var chat in Model.GroupChat)
+                {
+                    if (chat.SenderId == User.Identity.GetUserId())
+                    {
+
+                        <li class="mymsg">
+                            
+                                <div class="msgArea ">
+                                    <span class="msgHeading"></span><div class="msg">@chat.Message</div><span class="msgtime">@chat.DateTime.ToShortDateString()-@chat.DateTime.ToShortTimeString()</span>
+                                </div>
+                            
+                        </li>
+                       
+                    }
+                    else
+                    {
+                        <li class="othermsg">
+                           
+                            <div class="msgAreaOther"> 
+                            <span class="msgHeadingOther">@chat.Sender.FirstName</span><div class="msgOther">@chat.Message</div><span class="msgtimeOther">@chat.DateTime.ToShortDateString()-@chat.DateTime.ToShortTimeString()</span>
+                            </div>
+                           
+
+                        </li>
+                       
+                    }
+
+
+                }
+
+
+
+            }
+
+
+
+
+        </ul>
+
+    </div>
+    <!-- /.panel-body -->
+    <div class="panel-footer">
+        <div class="input-group">
+           
+            <input id="message" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." />
+
+            <span class="input-group-btn">
+                <input type="button" class="btn btn-warning btn-sm" id="sendmessage" data-group-id="@Model.Group.Id" data-sender-id="@User.Identity.GetUserId()" value="Send">
+
+            </span>
+        </div>
+    </div>
+</div>
